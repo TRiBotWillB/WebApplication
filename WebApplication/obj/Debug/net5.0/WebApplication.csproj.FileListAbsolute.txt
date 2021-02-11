@@ -34,3 +34,4 @@ C:\Users\Will\RiderProjects\WebApplication\WebApplication\obj\Debug\net5.0\WebAp
 C:\Users\Will\RiderProjects\WebApplication\WebApplication\obj\Debug\net5.0\WebApplication.csproj.CopyComplete
 C:\Users\Will\RiderProjects\WebApplication\WebApplication\obj\Debug\net5.0\Razor\Views\Home\Index.cshtml.g.cs
 C:\Users\Will\RiderProjects\WebApplication\WebApplication\obj\Debug\net5.0\Razor\Views\Shared\_Layout.cshtml.g.cs
+C:\Users\Will\RiderProjects\WebApplication\WebApplication\obj\Debug\net5.0\Razor\Views\_ViewStart.cshtml.g.cs
