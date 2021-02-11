@@ -6,7 +6,7 @@ namespace WebApplication.Controllers
 {
     public class HomeController : Controller
     {
-        private IEmployeeRepository _employeeRepository;
+        private readonly IEmployeeRepository _employeeRepository;
 
         public HomeController(IEmployeeRepository employeeRepository)
         {
@@ -20,9 +20,10 @@ namespace WebApplication.Controllers
             return View(model);
         }
 
-        public ViewResult Details()
+        public ViewResult Details(int? id)
         {
-            Employee model = _employeeRepository.GetEmployee(1);
+            Employee model = _employeeRepository.GetEmployee(id ?? 1);
+
             HomeDetailsViewModel viewModel = new HomeDetailsViewModel()
             {
                 Employee = model,
