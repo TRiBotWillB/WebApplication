@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>@ViewData["Title"]</title>
+</head>
+<body>
+
+@RenderBody()
+
+@if (IsSectionDefined("Scripts"))
+{
+    @RenderSection("Scripts", false)
+}
+</body>
+</html>

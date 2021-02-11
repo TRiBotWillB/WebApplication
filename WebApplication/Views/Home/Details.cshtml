@@ -1,0 +1,23 @@
+@model WebApplication.ViewModels.HomeDetailsViewModel
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    
+    ViewData["Title"] = "Employee Details";
+}
+
+<div>
+    <h3>@Model.PageTitle</h3>
+
+    <ul>
+        <li>Name: @Model.Employee.Name</li>
+        <li>Email: @Model.Employee.Email</li>
+        <li>Department: @Model.Employee.Department</li>
+    </ul>
+
+</div>
+
+@section Scripts
+{
+    <script src="~/js/script.js"></script>
+}
