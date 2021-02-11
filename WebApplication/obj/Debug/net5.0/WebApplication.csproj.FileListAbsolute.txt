@@ -37,3 +37,4 @@ C:\Users\Will\RiderProjects\WebApplication\WebApplication\obj\Debug\net5.0\Razor
 C:\Users\Will\RiderProjects\WebApplication\WebApplication\obj\Debug\net5.0\Razor\Views\_ViewStart.cshtml.g.cs
 C:\Users\Will\RiderProjects\WebApplication\WebApplication\obj\Debug\net5.0\Razor\Views\_ViewImports.cshtml.g.cs
 C:\Users\Will\RiderProjects\WebApplication\WebApplication\bin\Debug\net5.0\libman.json
+C:\Users\Will\RiderProjects\WebApplication\WebApplication\obj\Debug\net5.0\Razor\Views\Home\Create.cshtml.g.cs

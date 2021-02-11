@@ -7,6 +7,10 @@ namespace WebApplication.Models
     {
         Employee GetEmployee(int Id);
 
+        Employee AddEmployee(Employee employee);
+
+        Employee RemoveEmployee(int Id);
+
         IEnumerable<Employee> GetAllEmployees();
     }
 }

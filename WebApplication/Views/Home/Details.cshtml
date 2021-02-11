@@ -4,15 +4,31 @@
     ViewData["Title"] = "Employee Details";
 }
 
-<div>
-    <h3>@Model.PageTitle</h3>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-4">
+            <div class="card-deck">
+                <div class="card m-3">
+                    <div class="card-header">
+                        <h3>@Model.Employee.Name</h3>
+                    </div>
 
-    <ul>
-        <li>Name: @Model.Employee.Name</li>
-        <li>Email: @Model.Employee.Email</li>
-        <li>Department: @Model.Employee.Department</li>
-    </ul>
+                    <div class="card-body">
+                        <ul>
+                            <li>Name: @Model.Employee.Name</li>
+                            <li>Email: @Model.Employee.Email</li>
+                            <li>Department: @Model.Employee.Department</li>
+                        </ul>
+                    </div>
 
+                    <div class="card-footer text-center">
+                        <a class="btn btn-warning">Edit</a>
+                        <a class="btn btn-danger">Delete</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 @section Scripts

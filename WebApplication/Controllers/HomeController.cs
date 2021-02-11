@@ -32,5 +32,23 @@ namespace WebApplication.Controllers
 
             return View(viewModel);
         }
+
+        [HttpGet]
+        public ViewResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Create(Employee employee)
+        {
+            if (ModelState.IsValid)
+            {
+                Employee newEmployee = _employeeRepository.AddEmployee(employee);
+                //return RedirectToAction("Details", new {id = newEmployee.Id});
+            }
+
+            return View();
+        }
     }
 }
