@@ -2,6 +2,8 @@
 
 @{
     ViewData["Title"] = "Employee Details";
+
+    var photoPath = "/images/" + (Model.Employee.PhotoPath ?? "user.png");
 }
 
 <div class="container mt-5">
@@ -14,6 +16,8 @@
                     </div>
 
                     <div class="card-body">
+                        <img class="card-img-top" src="@photoPath"/>
+
                         <ul>
                             <li>Name: @Model.Employee.Name</li>
                             <li>Email: @Model.Employee.Email</li>
@@ -22,7 +26,7 @@
                     </div>
 
                     <div class="card-footer text-center">
-                        <a class="btn btn-warning">Edit</a>
+                        <a class="btn btn-warning" asp-controller="Home" asp-action="Edit" asp-route-id="@Model.Employee.Id">Edit</a>
                         <a class="btn btn-danger">Delete</a>
                     </div>
                 </div>

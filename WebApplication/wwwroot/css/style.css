@@ -2,6 +2,11 @@
     width: 75px;
 }
 
+.imageThumbnail {
+    height: 200px;
+    width: auto;
+}
+
 .create-form {
     background-color: #f6f6f6;
     

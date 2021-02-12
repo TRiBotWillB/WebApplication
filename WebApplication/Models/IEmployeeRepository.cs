@@ -5,12 +5,14 @@ namespace WebApplication.Models
 {
     public interface IEmployeeRepository
     {
-        Employee GetEmployee(int Id);
+        Employee Get(int Id);
 
-        Employee AddEmployee(Employee employee);
+        Employee Add(Employee employee);
 
-        Employee RemoveEmployee(int Id);
+        Employee Delete(int Id);
 
         IEnumerable<Employee> GetAllEmployees();
+
+        Employee Update(Employee employee);
     }
 }

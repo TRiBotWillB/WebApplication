@@ -1,16 +1,22 @@
-@model EmployeeCreateViewModel
+@model EmployeeEditViewModel
 
 @{
-    ViewData["Title"] = "Create Employee";
+    ViewData["Title"] = "Edit Employee";
+    
+    var photoPath = "/images/" + (Model.ExistingPhotoPath ?? "user.png");
+
 }
 
 <div class="container">
     <div class="row justify-content-center pt-5">
         <div class="col-6">
-            <h3 class="text-center mb-3">Create Employee</h3>
+            <h3 class="text-center mb-3">Update Employee</h3>
 
-            <form enctype="multipart/form-data" asp-controller="Home" asp-action="Create" method="post" class="create-form">
+            <form enctype="multipart/form-data" asp-controller="Home" asp-action="Edit" method="post" class="create-form">
 
+                <input asp-for="Id" hidden />
+                <input asp-for="ExistingPhotoPath" hidden />
+                
                 <div class="form-group">
                     <label asp-for="Name"></label>
                     <input class="form-control" asp-for="Name"/>
@@ -35,11 +41,15 @@
                     <label asp-for="Photo"></label>
                     <input class="form-control" asp-for="Photo" multiple/>
                 </div>
+                
+                <img class="mt-4" src="@photoPath" />
 
                 <div class="mt-3 text-danger" asp-validation-summary="All">
                 </div>
 
-                <button class="btn btn-success mt-3" type="submit">Create</button>
+                <button class="btn btn-success mt-3" type="submit">Update</button>
+                
+                <a asp-controller="Home" asp-action="Index" class="btn btn-danger mt-3" type="submit">Cancel</a>
             </form>
         </div>
     </div>

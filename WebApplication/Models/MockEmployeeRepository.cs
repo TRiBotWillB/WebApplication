@@ -20,12 +20,12 @@ namespace WebApplication.Models
             
         }
         
-        public Employee GetEmployee(int Id)
+        public Employee Get(int Id)
         {
             return _employeeList.FirstOrDefault(employee => employee.Id == Id);
         }
 
-        public Employee AddEmployee(Employee employee)
+        public Employee Add(Employee employee)
         {
             employee.Id = _employeeList.Max(e => e.Id) + 1;
             _employeeList.Add(employee);
@@ -33,7 +33,19 @@ namespace WebApplication.Models
             return employee;
         }
 
-        public Employee RemoveEmployee(int Id)
+        public Employee Delete(int Id)
+        {
+            Employee employee = Get(Id);
+
+            if (employee != null)
+            {
+                _employeeList.Remove(employee);
+            }
+
+            return employee;
+        }
+
+        public Employee Remove(int Id)
         {
             throw new System.NotImplementedException();
         }
@@ -41,6 +53,20 @@ namespace WebApplication.Models
         public IEnumerable<Employee> GetAllEmployees()
         {
             return _employeeList;
+        }
+
+        public Employee Update(Employee employeeChanges)
+        {
+            Employee employee = Get(employeeChanges.Id);
+
+            if (employee != null)
+            {
+                employee.Name = employeeChanges.Name;
+                employee.Email = employeeChanges.Email;
+                employee.Department = employeeChanges.Department;
+            }
+
+            return employee;
         }
     }
 }
