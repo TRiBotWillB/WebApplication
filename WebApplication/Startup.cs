@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -29,6 +30,9 @@ namespace WebApplication
         {
             services.AddDbContextPool<AppDBContext>(options => options.UseSqlServer(_config.GetConnectionString("EmployeeDBConnection")));
 
+            services.AddIdentity<ApplicationUser, IdentityRole>()
+                .AddEntityFrameworkStores<AppDBContext>();
+            
             services.AddMvc(options => options.EnableEndpointRouting = false).AddXmlSerializerFormatters();
 
             services.AddScoped<IEmployeeRepository, SQLEmployeeRepository>();
@@ -45,10 +49,17 @@ namespace WebApplication
             {
                 app.UseStatusCodePagesWithReExecute("/Error/{0}");
             }
-
+            
             app.UseStaticFiles();
+
+            app.UseAuthentication();
+
             //app.UseMvcWithDefaultRoute();
-            app.UseMvc(routes => { routes.MapRoute("default", "{controller=Home}/{action=Index}/{id?}"); });
+            
+            app.UseMvc(routes =>
+            {
+                routes.MapRoute("default", "{controller=Home}/{action=Index}/{id?}");
+            });
 
             app.UseMvc();
         }

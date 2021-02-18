@@ -1,7 +1,9 @@
 using System;
 using System.IO;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using WebApplication.Models;
 using WebApplication.ViewModels;
 
@@ -11,11 +13,13 @@ namespace WebApplication.Controllers
     {
         private readonly IEmployeeRepository _employeeRepository;
         private readonly IHostingEnvironment _hostingEnvironment;
+        private readonly ILogger<HomeController> _logger;
 
-        public HomeController(IEmployeeRepository employeeRepository, IHostingEnvironment hostingEnvironment)
+        public HomeController(IEmployeeRepository employeeRepository, IHostingEnvironment hostingEnvironment, ILogger<HomeController> logger)
         {
             _employeeRepository = employeeRepository;
             _hostingEnvironment = hostingEnvironment;
+            _logger = logger;
         }
 
         public ViewResult Index()
@@ -27,6 +31,9 @@ namespace WebApplication.Controllers
 
         public ViewResult Details(int? id)
         {
+            _logger.LogTrace("LOGGED TRACE");
+            _logger.LogWarning("LOGGED WARNING");
+
             Employee employee = _employeeRepository.Get(id.Value);
 
             if (employee == null)
@@ -45,12 +52,14 @@ namespace WebApplication.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public ViewResult Create()
         {
             return View();
         }
 
         [HttpPost]
+        [Authorize]
         public IActionResult Create(EmployeeCreateViewModel model)
         {
             if (ModelState.IsValid)
@@ -76,6 +85,7 @@ namespace WebApplication.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public ViewResult Edit(int Id)
         {
             Employee employee = _employeeRepository.Get(Id);
@@ -92,6 +102,7 @@ namespace WebApplication.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public IActionResult Edit(EmployeeEditViewModel model)
         {
             if (ModelState.IsValid)

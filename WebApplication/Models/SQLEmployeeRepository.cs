@@ -1,15 +1,18 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace WebApplication.Models
 {
     public class SQLEmployeeRepository : IEmployeeRepository
     {
         private readonly AppDBContext _context;
+        private readonly ILogger<SQLEmployeeRepository> _logger;
 
-        public SQLEmployeeRepository(AppDBContext context)
+        public SQLEmployeeRepository(AppDBContext context, ILogger<SQLEmployeeRepository> logger)
         {
             _context = context;
+            _logger = logger;
         }
 
         public Employee Get(int Id)
