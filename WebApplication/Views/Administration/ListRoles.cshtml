@@ -1,4 +1,8 @@
+@using Microsoft.AspNetCore.Authorization
+
 @model IEnumerable<IdentityRole>
+
+@inject IAuthorizationService AuthorizationService
 
 @{
     ViewBag.Title = "View Roles";
@@ -25,8 +29,26 @@
                             <h5 class="card-title">Role Name: @role.Name</h5>
                         </div>
 
-                        <a class="btn btn-warning" asp-action="EditRole" asp-controller="Administration" asp-route-id="@role.Id">Edit</a>
-                        <a class="btn btn-danger" asp-action="DeleteRole" asp-controller="Administration">Delete</a>
+                        <form method="post" asp-action="DeleteRole" asp-route-id="@role.Id">
+
+                            @if ((await AuthorizationService.AuthorizeAsync(User, "EditRolePolicy")).Succeeded)
+                            {
+                                <a class="btn btn-warning" asp-action="EditRole" asp-controller="Administration" asp-route-id="@role.Id">Edit</a>
+                            }
+
+                            @if ((await AuthorizationService.AuthorizeAsync(User, "DeleteRolePolicy")).Succeeded)
+                            {
+                                <span id="confirm-delete-@role.Id" style="display:none;">
+                                    <span>Are you sure you want to delete?</span>
+                                    <button type="submit" class="btn btn-danger">Yes</button>
+                                    <a href="#" class="btn btn-primary"onclick="confirmDelete('@role.Id', false)">No</a>
+                                </span>
+
+                                <span id="delete-@role.Id">
+                                    <a href="#" class="btn btn-danger" onclick="confirmDelete('@role.Id', true)">Delete</a>
+                                </span>
+                            }
+                        </form>
                     </div>
                 }
             }

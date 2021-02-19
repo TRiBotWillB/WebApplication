@@ -6744,19 +6744,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Will\\.nuget\\packages\\": {}
+    "/home/will/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Will\\RiderProjects\\WebApplication\\WebApplication\\WebApplication.csproj",
+      "projectUniqueName": "/home/will/RiderProjects/WebApplication/WebApplication/WebApplication.csproj",
       "projectName": "WebApplication",
-      "projectPath": "C:\\Users\\Will\\RiderProjects\\WebApplication\\WebApplication\\WebApplication.csproj",
-      "packagesPath": "C:\\Users\\Will\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Will\\RiderProjects\\WebApplication\\WebApplication\\obj\\",
+      "projectPath": "/home/will/RiderProjects/WebApplication/WebApplication/WebApplication.csproj",
+      "packagesPath": "/home/will/.nuget/packages/",
+      "outputPath": "/home/will/RiderProjects/WebApplication/WebApplication/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Will\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "/home/will/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net5.0"
@@ -6831,7 +6831,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.103\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/snap/dotnet-sdk/112/sdk/5.0.103/RuntimeIdentifierGraph.json"
       }
     }
   }

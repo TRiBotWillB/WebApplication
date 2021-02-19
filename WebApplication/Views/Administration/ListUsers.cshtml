@@ -1,0 +1,76 @@
+@model IEnumerable<ApplicationUser>
+
+@{
+    ViewBag.Title = "All Users";
+}
+
+<h2>All Users</h2>
+
+@if (Model.Any())
+{
+    <div class="container mt-5">
+
+        <a class="btn btn-primary"
+           asp-controller="Account" asp-action="Register">
+            Add New User
+        </a>
+
+        <div class="row row-cols-1 row-cols-md-3 employee-list">
+            @foreach (var user in Model)
+            {
+                <div class="col mb-3">
+                    <div class="card">
+                        <div class="card-header">
+                            User Id: @user.Id
+                        </div>
+
+                        <div class="card-body justify-content-center text-center">
+                            @user.UserName
+                        </div>
+
+                        <div class="card-footer">
+
+                            <form method="post" asp-action="DeleteUser" asp-route-id="@user.Id">
+                                <a class="btn btn-warning"
+                                   asp-action="EditUser"
+                                   asp-controller="Administration"
+                                   asp-route-id="@user.Id">
+                                    Edit
+                                </a>
+
+                                <span id="confirm-delete-@user.Id" style="display:none;">
+                                    <span>Are you sure you want to delete?</span>
+                                    <button type="submit" class="btn btn-danger">Yes</button>
+                                    <a href="#" class="btn btn-primary"onclick="confirmDelete('@user.Id', false)">No</a>
+                                </span>
+
+                                <span id="delete-@user.Id">
+                                    <a href="#" class="btn btn-danger" onclick="confirmDelete('@user.Id', true)">Delete</a>
+                                </span>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+}
+else
+{
+    <div class="card">
+        <div class="card-header">
+
+        </div>
+
+        <div class="card-body">
+            <h5 class="card-title">
+                Use the button below to create a user
+            </h5>
+
+            <a class="btn btn-primary"
+               asp-controller="Account" asp-action="Register">
+                Add New User
+            </a>
+        </div>
+    </div>
+}

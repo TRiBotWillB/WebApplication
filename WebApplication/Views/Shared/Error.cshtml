@@ -1,7 +1,18 @@
+@using Microsoft.EntityFrameworkCore.Metadata.Internal
 @{
     ViewBag.Title = "title";
 }
 
-<h3>An error occured while processing your request.</h3>
-<hr/>
-
+@if (ViewBag.ErrorTitle == null)
+{
+    <h3>An error occured while processing your request.</h3>
+    <hr/>
+}
+else
+{
+    <h3>@ViewBag.ErrorTitle</h3>
+    <hr/>
+    
+    <p>@ViewBag.ErrorMessage</p>
+    
+}
