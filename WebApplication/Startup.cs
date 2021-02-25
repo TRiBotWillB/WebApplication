@@ -33,10 +33,41 @@ namespace WebApplication
             services.AddDbContextPool<AppDBContext>(options =>
                 options.UseSqlServer(_config.GetConnectionString("EmployeeDBConnection")));
 
-            services.AddIdentity<ApplicationUser, IdentityRole>()
+            services.AddIdentity<ApplicationUser, IdentityRole>(options =>
+                {
+                    options.SignIn.RequireConfirmedEmail = true;
+                    options.Tokens.EmailConfirmationTokenProvider = "CustomEmailConfirmation";
+
+                    options.Lockout.MaxFailedAccessAttempts = 5;
+                    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(15);
+                })
+                .AddDefaultTokenProviders()
+                .AddTokenProvider<CustomEmailConfirmationTokenProvider<ApplicationUser>>("CustomEmailConfirmation")
                 .AddEntityFrameworkStores<AppDBContext>();
 
+            services.Configure<DataProtectionTokenProviderOptions>(o =>
+            {
+                o.TokenLifespan = TimeSpan.FromHours(5);
+            });
+
+            services.Configure<CustomEmailConfirmationTokenProviderOptions>(o =>
+            {
+                o.TokenLifespan = TimeSpan.FromDays(3);
+            });
+            
             services.AddMvc(options => options.EnableEndpointRouting = false).AddXmlSerializerFormatters();
+
+            services.AddAuthentication()
+                .AddGoogle(options =>
+                {
+                    options.ClientId = "863536235389-aolmua9mfl0h7o6idrd079t0r23kgkhi.apps.googleusercontent.com";
+                    options.ClientSecret = "pPaeW0QmHSI8xBJKeoXITPwz";
+                })
+                .AddFacebook(options =>
+                {
+                    options.AppId = "267295338098528";
+                    options.AppSecret = "a203b5171f722bac1828929eb888a7d8";
+                });
 
             services.ConfigureApplicationCookie(options =>
             {
@@ -47,7 +78,8 @@ namespace WebApplication
             {
                 options.AddPolicy("DeleteRolePolicy", policy => policy.RequireClaim("Delete Role", "true"));
 
-                options.AddPolicy("EditRolePolicy", policy => policy.AddRequirements(new ManageAdminRolesAndClaimsRequirement()));
+                options.AddPolicy("EditRolePolicy",
+                    policy => policy.AddRequirements(new ManageAdminRolesAndClaimsRequirement()));
 
                 options.AddPolicy("AdminRolePolicy", policy => policy.RequireRole("Admin"));
             });
@@ -56,6 +88,7 @@ namespace WebApplication
 
             services.AddSingleton<IAuthorizationHandler, CanEditOnlyOtherAdminRolesAndClaimsHandler>();
             services.AddSingleton<IAuthorizationHandler, SuperAdminHandler>();
+            services.AddSingleton<DataProtectionPurposeStrings>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -1,10 +1,13 @@
 using System;
 using System.IO;
+using System.Linq;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using WebApplication.Models;
+using WebApplication.Security;
 using WebApplication.ViewModels;
 
 namespace WebApplication.Controllers
@@ -14,32 +17,44 @@ namespace WebApplication.Controllers
         private readonly IEmployeeRepository _employeeRepository;
         private readonly IHostingEnvironment _hostingEnvironment;
         private readonly ILogger<HomeController> _logger;
+        private readonly IDataProtector _dataProtector;
 
-        public HomeController(IEmployeeRepository employeeRepository, IHostingEnvironment hostingEnvironment, ILogger<HomeController> logger)
+        public HomeController(IEmployeeRepository employeeRepository, IHostingEnvironment hostingEnvironment,
+            ILogger<HomeController> logger, IDataProtectionProvider dataProtectionProvider,
+            DataProtectionPurposeStrings dataProtectionPurposeStrings)
         {
             _employeeRepository = employeeRepository;
             _hostingEnvironment = hostingEnvironment;
             _logger = logger;
+            _dataProtector = dataProtectionProvider.CreateProtector(dataProtectionPurposeStrings.EmployeeIdRouteValue);
         }
 
         public ViewResult Index()
         {
-            var model = _employeeRepository.GetAllEmployees();
+            var model = _employeeRepository.GetAllEmployees()
+                .Select(e =>
+                {
+                    e.EncryptedId = _dataProtector.Protect(e.Id.ToString());
+
+                    return e;
+                });
 
             return View(model);
         }
 
-        public ViewResult Details(int? id)
+        public ViewResult Details(string id)
         {
+            int employeeId = Convert.ToInt32(_dataProtector.Unprotect(id));
+            
             _logger.LogTrace("LOGGED TRACE");
             _logger.LogWarning("LOGGED WARNING");
 
-            Employee employee = _employeeRepository.Get(id.Value);
+            Employee employee = _employeeRepository.Get(employeeId);
 
             if (employee == null)
             {
                 Response.StatusCode = 404;
-                return View("EmployeeNotFound", id.Value);
+                return View("EmployeeNotFound", employeeId);
             }
 
             HomeDetailsViewModel viewModel = new HomeDetailsViewModel()

@@ -34,7 +34,35 @@
                 </div>
 
                 <button type="submit" class="btn btn-success mt-3">Login</button>
+                
+                <a asp-action="ForgotPassword">Forgot Password?</a>
             </form>
+
+            <hr/>
+
+            @{
+                if (Model.ExternalLogins.Count == 0)
+                {
+                    <h5 class="mt-4">No External Logins Provided</h5>
+                }
+                else
+                {
+                    <form class="mt-4" method="post" asp-action="ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl">
+                        <div>
+                            @foreach (var provider in Model.ExternalLogins)
+                            {
+                                <button class="btn btn-success"
+                                        type="submit"
+                                        name="provider"
+                                        value="@provider.Name"
+                                        title="Login using your @provider.DisplayName account">
+                                    @provider.DisplayName
+                                </button>
+                            }
+                        </div>
+                    </form>
+                }
+            }
         </div>
     </div>
 </div>

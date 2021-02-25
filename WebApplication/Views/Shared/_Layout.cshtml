@@ -62,13 +62,23 @@
         </div>
     </div>
 
-    <div class="d-flex">
+    <div class="navbar-nav d-flex">
         @{
             if (signInManager.IsSignedIn(User))
             {
-                <span class="mr-3">
-                    @User.Identity.Name
-                </span>
+                <li class="nav-item dropdown mr-3">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownLink"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        @User.Identity.Name
+                    </a>
+                    
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownLink">
+                        <a class="dropdown-item" asp-action="ChangePassword" asp-controller="Account">
+                            Change Password
+                        </a>
+                    </div>
+                </li>
+                
                 <form method="post" asp-action="Logout" asp-controller="Account">
                     <button type="submit" class="btn btn-danger">Logout</button>
                 </form>

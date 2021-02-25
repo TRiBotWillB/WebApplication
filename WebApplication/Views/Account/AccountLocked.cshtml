@@ -1,0 +1,14 @@
+@{
+    ViewBag.Title = "Account Locked";
+    Layout = "_Layout";
+}
+
+<h2 class="text-danger">
+    Your account is locked due to a number of failed login attempts.
+    Please wait before trying again.
+    
+    You may reset your password by clicking
+    <a asp-action="ForgotPassword" asp-controller="Account">
+        Here
+    </a>
+</h2>
